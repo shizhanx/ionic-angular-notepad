@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
+import { NotesService } from '../services/notes.service';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +9,40 @@ import { AlertController, NavController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  constructor(private alertCtrl: AlertController, private navCtrl: NavController) { }
+  constructor(
+    public notesService: NotesService,
+    private alertCtrl: AlertController,
+    private navCtrl: NavController
+  ) { }
   
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
+    this.notesService.load();
+  }
+
+  addNote() {
+    this.alertCtrl.create({
+      header: 'New note',
+      message: 'Input title please', 
+      inputs: [
+        {
+          type: 'text',
+          name: 'title'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: data => {
+            this.notesService.createNote(data.title);
+          }
+        }
+      ]
+    }).then(a => {
+      a.present();
+    })
   }
 
 }
