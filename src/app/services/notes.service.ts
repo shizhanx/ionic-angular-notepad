@@ -28,8 +28,8 @@ export class NotesService {
     this.storage.set('notes', this.notes);
   }
 
-  getNote(id: number): Note {
-    return this.notes.find(note => note.id === id.toString());
+  getNote(id: string): Note {
+    return this.notes.find(note => note.id === id);
   }
 
   createNote(title: string): void {
