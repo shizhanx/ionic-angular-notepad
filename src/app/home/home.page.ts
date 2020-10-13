@@ -45,4 +45,8 @@ export class HomePage implements OnInit {
     })
   }
 
+  navTo(id: string) {
+    this.navCtrl.navigateForward("/notes/" + id);
+  }
+
 }
