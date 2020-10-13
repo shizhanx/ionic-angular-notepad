@@ -6,7 +6,7 @@ import { Note } from '../interfaces/note';
   providedIn: 'root'
 })
 export class NotesService {
-  public notes: Note[];
+  public notes: Note[] = [];
   public loaded: Boolean = false;
   private id: number = 1;
 
@@ -29,16 +29,18 @@ export class NotesService {
   }
 
   getNote(id: number): Note {
-    return this.notes.find(note => note.id === id);
+    return this.notes.find(note => note.id === id.toString());
   }
 
   createNote(title: string): void {
-    this.notes.push({
-      id: this.id,
+    let note: Note = {
+      id: this.id.toString(),
       title: title,
       content: ''
-    })
+    };
+    this.notes.push(note);
     this.id++;
+    this.save();
   }
 
   deleteNote(note: Note): void {
